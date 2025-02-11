@@ -30,7 +30,7 @@ for j in range(0, len(chapters), 2):
         for k in range(len(notes)):
             split_note = notes[k].split('            ')
             timestamp = f'00{split_note[0]}'
-            text = split_note[1].replace('\n\n\n', '')
+            text = split_note[1].replace('\n\n\n', '').replace('    ', '')
             video_notes.append({'timestamp': timestamp, 'text': text})
 
         chapter_videos.append({'title': video_title, 'notes': video_notes})
