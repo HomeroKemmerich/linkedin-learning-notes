@@ -2,11 +2,19 @@ import json
 
 from constants import FILE_NAME
 
+TIMESTAMP_SEPARATOR = '\n0'
+CHAPTER_SEPARATOR = '*' * 47
+SECTION_SEPARATOR = '\n' * 3
+VIDEO_SEPARATOR = '-' * 47
+NEW_LINE_SPACING = ' ' * 4
+INLINE_SPACING = ' ' * 12
+
+
 with open(FILE_NAME, 'r', encoding='utf-8') as file:
     notes = file.read()
 
 # Split the content into chapters
-chapters = notes.split('***********************************************')
+chapters = notes.split(CHAPTER_SEPARATOR)
 
 # Extract metadata from "chapter 0"
 course_metadata = chapters.pop(0).split('\n\n')
@@ -17,21 +25,22 @@ chapter_list = []
 for j in range(0, len(chapters), 2):
     chapter_title = chapters[j].replace('\n', '')
 
-    videos = chapters[j + 1].split('-----------------------------------------------')
-    videos = [video for video in videos if video != '\n\n\n']
+    # Split the content into videos
+    videos = chapters[j + 1].split(VIDEO_SEPARATOR)
+    videos = [video for video in videos if video != SECTION_SEPARATOR]
 
     chapter_videos = []
     for j in range(0, len(videos), 2):
         video_title = videos[j].replace('\n', '').replace('Vídeo: ', '')
 
         # FIXME: Doesn't work for 1 hour+ videos
-        notes = videos[j + 1].split('\n0')[1:]
+        notes = videos[j + 1].split(TIMESTAMP_SEPARATOR)[1:]
 
         video_notes = []
         for k in range(len(notes)):
-            split_note = notes[k].split('            ')
+            split_note = notes[k].split(INLINE_SPACING)
             timestamp = f'00{split_note[0]}'
-            text = split_note[1].replace('\n\n\n', '').replace('    ', '')
+            text = split_note[1].replace(SECTION_SEPARATOR, '').replace(NEW_LINE_SPACING, '')
             video_notes.append({'timestamp': timestamp, 'text': text})
 
         chapter_videos.append({'title': video_title, 'notes': video_notes})
