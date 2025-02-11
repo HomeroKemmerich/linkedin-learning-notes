@@ -173,3 +173,4 @@ cython_debug/
 # I/O files
 *.txt
 *.json
+*.md

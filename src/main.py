@@ -4,6 +4,8 @@ from functions import unformat, timestamp_to_seconds
 from settings import INPUT_FILE, LANGUAGE, OUTPUT_FILE, OUTPUT_FORMAT
 from language import texts
 
+from markdown_utilities import md_blocks
+from markdown_utilities.pymd import dict_to_md
 
 LINKEDIN_LEARNING_URL = 'https://www.linkedin.com/learning'
 TIMESTAMP_SEPARATOR = '\n0'
@@ -63,7 +65,25 @@ course = {
     'chapters': chapter_list
 }
 
-parsed_notes = json.dumps(course, indent=2, ensure_ascii=False)
+json_notes = json.dumps(course, indent=2, ensure_ascii=False)
 
-with open('parsed_notes.json', 'w', encoding='utf-8') as file:
-    file.write(parsed_notes)
+md_notes = [
+    md_blocks.h1(course['title']),
+    md_blocks.p(course['description']),
+]
+for chapter in course['chapters']:
+    md_notes.append(md_blocks.h2(chapter['title']))
+    for video in chapter['videos']:
+        md_notes.append(md_blocks.h3(video['title']))
+        for note in video['notes']:
+            md_notes.append(md_blocks.h4(f'[{note["timestamp"]}]({note["url"]})'))
+            md_notes.append(md_blocks.p(f'{note["text"]}'))
+md_content = dict_to_md(md_notes)
+
+output = {
+    'json': json_notes,
+    'md': md_content
+}
+
+with open(f'{OUTPUT_FILE}.{OUTPUT_FORMAT}', 'w', encoding='utf-8') as file:
+    file.write(output[OUTPUT_FORMAT])
