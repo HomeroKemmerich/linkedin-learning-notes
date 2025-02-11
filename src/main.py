@@ -16,9 +16,12 @@ NEW_LINE_SPACING = ' ' * 4
 INLINE_SPACING = ' ' * 12
 
 
+#region INPUT
 with open(INPUT_FILE, 'r', encoding='utf-8') as file:
     notes = file.read()
+#endregion
 
+#region PROCESS
 # Split the content into chapters
 chapters = notes.split(CHAPTER_SEPARATOR)
 
@@ -64,7 +67,9 @@ course = {
     'description': course_description,
     'chapters': chapter_list
 }
+#endregion
 
+#region OUTPUT
 json_notes = json.dumps(course, indent=2, ensure_ascii=False)
 
 md_notes = [
@@ -87,3 +92,4 @@ output = {
 
 with open(f'{OUTPUT_FILE}.{OUTPUT_FORMAT}', 'w', encoding='utf-8') as file:
     file.write(output[OUTPUT_FORMAT])
+#endregion
