@@ -24,6 +24,7 @@ for j in range(0, len(chapters), 2):
     for j in range(0, len(videos), 2):
         video_title = videos[j].replace('\n', '').replace('Vídeo: ', '')
 
+        # FIXME: Doesn't work for 1 hour+ videos
         notes = videos[j + 1].split('\n0')[1:]
 
         video_notes = []
