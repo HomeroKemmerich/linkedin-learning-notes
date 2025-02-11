@@ -14,7 +14,7 @@ NEW_LINE_SPACING = ' ' * 4
 INLINE_SPACING = ' ' * 12
 
 
-with open(FILE_NAME, 'r', encoding='utf-8') as file:
+with open(INPUT_FILE, 'r', encoding='utf-8') as file:
     notes = file.read()
 
 # Split the content into chapters
@@ -24,6 +24,7 @@ chapters = notes.split(CHAPTER_SEPARATOR)
 course_metadata = chapters.pop(0).split('\n\n')
 course_title = course_metadata[0].replace(texts[LANGUAGE]['course_name'], '')
 course_description = course_metadata[1].replace(texts[LANGUAGE]['course_description'], '')
+course_stub = course_title.lower().replace(':', '').replace(' ', '-')
 
 chapter_list = []
 for j in range(0, len(chapters), 2):
@@ -36,6 +37,7 @@ for j in range(0, len(chapters), 2):
     chapter_videos = []
     for j in range(0, len(videos), 2):
         video_title = videos[j].replace('\n', '').replace(texts[LANGUAGE]['video'], '')
+        video_stub = unformat(video_title.lower().replace(' ', '-')).replace('?', '')
 
         # FIXME: Doesn't work for 1 hour+ videos
         notes = videos[j + 1].split(TIMESTAMP_SEPARATOR)[1:]
@@ -45,7 +47,11 @@ for j in range(0, len(chapters), 2):
             split_note = notes[k].split(INLINE_SPACING)
             timestamp = f'00{split_note[0]}'
             text = split_note[1].replace(SECTION_SEPARATOR, '').replace(NEW_LINE_SPACING, '')
-            video_notes.append({'timestamp': timestamp, 'text': text})
+            video_notes.append({
+                'timestamp': timestamp,
+                'url': f'{LINKEDIN_LEARNING_URL}/{course_stub}/{video_stub}?seekTo={timestamp_to_seconds(timestamp)}', 
+                'text': text
+                })
 
         chapter_videos.append({'title': video_title, 'notes': video_notes})
 
