@@ -1,6 +1,8 @@
 import json
 
-from constants import FILE_NAME
+from constants import FILE_NAME, LANGUAGE
+from language import texts
+
 
 TIMESTAMP_SEPARATOR = '\n0'
 CHAPTER_SEPARATOR = '*' * 47
@@ -18,12 +20,12 @@ chapters = notes.split(CHAPTER_SEPARATOR)
 
 # Extract metadata from "chapter 0"
 course_metadata = chapters.pop(0).split('\n\n')
-course_title = course_metadata[0].split('Nome do curso: ')[1]
-course_description = course_metadata[1].split('Descrição: ')[1]
+course_title = course_metadata[0].replace(texts[LANGUAGE]['course_name'], '')
+course_description = course_metadata[1].replace(texts[LANGUAGE]['course_description'], '')
 
 chapter_list = []
 for j in range(0, len(chapters), 2):
-    chapter_title = chapters[j].replace('\n', '')
+    chapter_title = chapters[j].replace('\n', '').replace(texts[LANGUAGE]['chapter'], '')
 
     # Split the content into videos
     videos = chapters[j + 1].split(VIDEO_SEPARATOR)
@@ -31,7 +33,7 @@ for j in range(0, len(chapters), 2):
 
     chapter_videos = []
     for j in range(0, len(videos), 2):
-        video_title = videos[j].replace('\n', '').replace('Vídeo: ', '')
+        video_title = videos[j].replace('\n', '').replace(texts[LANGUAGE]['video'], '')
 
         # FIXME: Doesn't work for 1 hour+ videos
         notes = videos[j + 1].split(TIMESTAMP_SEPARATOR)[1:]
