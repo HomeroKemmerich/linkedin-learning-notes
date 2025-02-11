@@ -1,10 +1,11 @@
 import json
 
 from functions import unformat, timestamp_to_seconds
-from settings import INPUT_FILE, LANGUAGE
+from settings import INPUT_FILE, LANGUAGE, OUTPUT_FILE, OUTPUT_FORMAT
 from language import texts
 
 
+LINKEDIN_LEARNING_URL = 'https://www.linkedin.com/learning'
 TIMESTAMP_SEPARATOR = '\n0'
 CHAPTER_SEPARATOR = '*' * 47
 SECTION_SEPARATOR = '\n' * 3
