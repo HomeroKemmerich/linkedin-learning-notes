@@ -1,6 +1,7 @@
 import json
 
-from constants import FILE_NAME, LANGUAGE
+from functions import unformat, timestamp_to_seconds
+from settings import INPUT_FILE, LANGUAGE
 from language import texts
 
 
