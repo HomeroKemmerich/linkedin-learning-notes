@@ -1,0 +1,3 @@
+[submodule "packages/py-md"]
+	path = packages/py-md
+	url = https://github.com/HomeroKemmerich/py-md.git
