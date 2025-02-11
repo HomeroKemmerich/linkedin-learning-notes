@@ -4,7 +4,7 @@ A normalizer for LinkedIn Learning notes export
 
 > [!IMPORTANT]
 >
-> Currently the app only interprets pt-BR notes
+> Currently the app only interprets PTBR and ENUS notes. Feel free to add more languages through a pull request.
 
 ## Checklist
 
