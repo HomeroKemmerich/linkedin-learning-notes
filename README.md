@@ -9,5 +9,5 @@ A normalizer for LinkedIn Learning notes export
 ## Checklist
 
 - [x] Export to JSON
-- [ ] Export to Markdown
+- [x] Export to Markdown
 - [ ] Import into Readwise
