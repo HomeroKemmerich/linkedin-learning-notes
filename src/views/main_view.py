@@ -28,12 +28,14 @@ class MainView:
         self.filename = fd.askopenfilename()
         self.greeting.config(text=self.filename.split('/')[-1])
 
-    def save_file(self):
-        if not self.filename:
-            return
-        self.filename = fd.asksaveasfilename()
-        with open(self.filename, 'w') as file:
-            file.write('Hello, world!')
+    def export_file(self):
+        output_file = fd.asksaveasfilename(
+            filetypes=[
+                ('JSON files (.json)', '*.json'),
+                ('Markdown files (.md)', '*.md'), 
+                ('Text files (.txt)', '*.txt'), 
+            ]),
+        self.controller.set_output_file(output_file)
 
     def cancel(self):
         self.root.destroy()
