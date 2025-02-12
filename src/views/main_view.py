@@ -42,3 +42,9 @@ class MainView:
 
     def open(self):
         self.root.mainloop()
+
+    def set_language(self, language):
+        self.controller.set_language(language)
+    
+    def set_destination(self, destination):
+        self.controller.set_destination(destination)
