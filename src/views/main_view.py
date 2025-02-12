@@ -18,11 +18,27 @@ class MainView:
         self.select_file_button = ttk.Button(self.root, text='Attach...', command=self.import_file)
         self.select_file_button.grid(column=2, row=0)
 
-        self.cancel_button = ttk.Button(self.root, text='Cancel', command=self.cancel)
-        self.cancel_button.grid(column=1, row=1)
+        self.select_language_label = ttk.Label(self.root, text='Select a language:')
+        self.select_language_label.grid(column=0, row=1)
 
-        self.export_button = ttk.Button(self.root, text='Export', command=self.save_file)
-        self.export_button.grid(column=2, row=1)
+        language_options = ['en_us', 'pt_br']
+        language = tk.StringVar(self.root)
+        self.select_language = tk.OptionMenu(self.root, language, *language_options, command=self.set_language)
+        self.select_language.grid(column=2, row=1)
+
+        self.select_destination_label = ttk.Label(self.root, text='Select a destination:')
+        self.select_destination_label.grid(column=0, row=2)
+
+        destination_options = ['File']
+        destination = tk.StringVar(self.root)
+        self.select_destination = tk.OptionMenu(self.root, destination, *destination_options, command=self.set_destination)
+        self.select_destination.grid(column=2, row=2)
+        
+        self.cancel_button = ttk.Button(self.root, text='Cancel', command=self.cancel)
+        self.cancel_button.grid(column=1, row=3)
+
+        self.export_button = ttk.Button(self.root, text='Export', command=self.export_file)
+        self.export_button.grid(column=2, row=3)
 
     def import_file(self):
         input_file = fd.askopenfilename()
