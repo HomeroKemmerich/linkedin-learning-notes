@@ -24,9 +24,10 @@ class MainView:
         self.export_button = ttk.Button(self.root, text='Export', command=self.save_file)
         self.export_button.grid(column=2, row=1)
 
-    def open_file(self):
-        self.filename = fd.askopenfilename()
-        self.greeting.config(text=self.filename.split('/')[-1])
+    def import_file(self):
+        input_file = fd.askopenfilename()
+        self.controller.set_input_file(input_file)
+        self.selected_file_label.config(text=input_file.split('/')[-1])
 
     def export_file(self):
         output_file = fd.asksaveasfilename(
