@@ -36,7 +36,7 @@ class MainView:
             file.write('Hello, world!')
 
     def cancel(self):
-        self.filename = None
+        self.root.destroy()
 
     def open(self):
         self.root.mainloop()
