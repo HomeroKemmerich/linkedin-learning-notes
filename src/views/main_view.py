@@ -12,10 +12,10 @@ class MainView:
         self.select_file_label = ttk.Label(self.root, text='Select a file:')
         self.select_file_label.grid(column=0, row=0)
 
-        self.greeting = ttk.Label(self.root, text='')
-        self.greeting.grid(column=1, row=0)
+        self.selected_file_label = ttk.Label(self.root, text='')
+        self.selected_file_label.grid(column=1, row=0)
 
-        self.select_file_button = ttk.Button(self.root, text='Attach...', command=self.open_file)
+        self.select_file_button = ttk.Button(self.root, text='Attach...', command=self.import_file)
         self.select_file_button.grid(column=2, row=0)
 
         self.cancel_button = ttk.Button(self.root, text='Cancel', command=self.cancel)
