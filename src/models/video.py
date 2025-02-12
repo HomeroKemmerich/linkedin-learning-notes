@@ -1,5 +1,5 @@
 from typing import List
-from note import Note
+from models.note import Note
 
 class Video:
     title: str
@@ -8,3 +8,9 @@ class Video:
     def __init__(self, title: str, notes: List[Note]):
         self.title = title
         self.notes = notes
+
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'notes': [note.to_dict() for note in self.notes]
+        }

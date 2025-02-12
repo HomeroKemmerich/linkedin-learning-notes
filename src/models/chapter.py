@@ -1,5 +1,5 @@
 from typing import List
-from video import Video
+from models.video import Video
 
 class Chapter:
     title: str
@@ -8,3 +8,9 @@ class Chapter:
     def __init__(self, title: str, videos: List[Video]):
         self.title = title
         self.videos = videos
+
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'videos': [video.to_dict() for video in self.videos]
+        }

@@ -1,7 +1,7 @@
 import json
 
 from typing import List
-from chapter import Chapter
+from models.chapter import Chapter
 
 from markdown_utilities import md_blocks
 from markdown_utilities.pymd import dict_to_md
@@ -16,8 +16,15 @@ class Course:
         self.description = description
         self.chapters = chapters
     
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'description': self.description,
+            'chapters': [chapter.to_dict() for chapter in self.chapters]
+        }
+
     def to_json(self):
-        return json.dumps(self.__dict__, indent=2, ensure_ascii=False)
+        return json.dumps(self.to_dict(), indent=2, ensure_ascii=False)
     
     def to_md(self):
         md_notes = [

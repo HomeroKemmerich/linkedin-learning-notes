@@ -4,8 +4,10 @@ from functions import unformat, timestamp_to_seconds
 from settings import INPUT_FILE, LANGUAGE, OUTPUT_FILE, OUTPUT_FORMAT
 from language import texts
 
-from markdown_utilities import md_blocks
-from markdown_utilities.pymd import dict_to_md
+from models.chapter import Chapter
+from models.course import Course
+from models.video import Video
+from models.note import Note
 
 LINKEDIN_LEARNING_URL = 'https://www.linkedin.com/learning'
 TIMESTAMP_SEPARATOR = '\n0'
@@ -50,44 +52,27 @@ for j in range(0, len(chapters), 2):
         video_notes = []
         for k in range(len(notes)):
             split_note = notes[k].split(INLINE_SPACING)
+
             timestamp = f'00{split_note[0]}'
             text = split_note[1].replace(SECTION_SEPARATOR, '').replace(NEW_LINE_SPACING, '')
-            video_notes.append({
-                'timestamp': timestamp,
-                'url': f'{LINKEDIN_LEARNING_URL}/{course_stub}/{video_stub}?seekTo={timestamp_to_seconds(timestamp)}', 
-                'text': text
-                })
+            url= f'{LINKEDIN_LEARNING_URL}/{course_stub}/{video_stub}?seekTo={timestamp_to_seconds(timestamp)}'
 
-        chapter_videos.append({'title': video_title, 'notes': video_notes})
+            video_notes.append(Note(timestamp, url, text))
 
-    chapter_list.append({'title': chapter_title, 'videos': chapter_videos})
+        chapter_videos.append(Video(video_title, video_notes))
 
-course = {
-    'title': course_title,
-    'description': course_description,
-    'chapters': chapter_list
-}
+    chapter_list.append(Chapter(chapter_title, chapter_videos))
+
+course = Course(course_title, course_description, chapter_list)
 #endregion
 
 #region OUTPUT
-json_notes = json.dumps(course, indent=2, ensure_ascii=False)
-
-md_notes = [
-    md_blocks.h1(course['title']),
-    md_blocks.p(course['description']),
-]
-for chapter in course['chapters']:
-    md_notes.append(md_blocks.h2(chapter['title']))
-    for video in chapter['videos']:
-        md_notes.append(md_blocks.h3(video['title']))
-        for note in video['notes']:
-            md_notes.append(md_blocks.h4(f'[{note["timestamp"]}]({note["url"]})'))
-            md_notes.append(md_blocks.p(f'{note["text"]}'))
-md_content = dict_to_md(md_notes)
+json_notes = course.to_json()
+md_notes = course.to_md()
 
 output = {
     'json': json_notes,
-    'md': md_content
+    'md': md_notes
 }
 
 with open(f'{OUTPUT_FILE}.{OUTPUT_FORMAT}', 'w', encoding='utf-8') as file:
