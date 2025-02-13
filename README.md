@@ -10,5 +10,5 @@ A normalizer for LinkedIn Learning notes export
 
 - [x] Export to JSON;
 - [x] Export to Markdown;
-- [ ] Create a CLI;
+- [x] Create a GUI;
 - [ ] Import into Readwise;
