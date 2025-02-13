@@ -44,15 +44,17 @@ class MainView:
         input_file = fd.askopenfilename()
         self.controller.set_input_file(input_file)
         self.selected_file_label.config(text=input_file.split('/')[-1])
+        self.controller.process_file()
 
     def export_file(self):
         output_file = fd.asksaveasfilename(
+            defaultextension='.json',
             filetypes=[
-                ('JSON files (.json)', '*.json'),
-                ('Markdown files (.md)', '*.md'), 
-                ('Text files (.txt)', '*.txt'), 
+                ('JSON files', '*.json'),
+                ('Markdown files', '*.md'), 
             ]),
-        self.controller.set_output_file(output_file)
+        self.controller.set_output_file(output_file[0])
+        self.controller.export_file()
 
     def cancel(self):
         self.root.destroy()
