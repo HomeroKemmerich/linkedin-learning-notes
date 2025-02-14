@@ -1,9 +1,7 @@
 class Settings:
-    input_file: str
-    output_file: str
-    output_option: str
-    output_format: str
-    readwise_api_key: str
+    def __init__(self, output_option='File', language='en_us'):
+        self.output_option = output_option
+        self.language = language
 
     #region Getters and setters
     @property
@@ -45,4 +43,12 @@ class Settings:
     @readwise_api_key.setter
     def readwise_api_key(self, value: str):
         self.__readwise_api_key = value
+
+    @property
+    def language(self) -> str:
+        return self.__language
+    
+    @language.setter
+    def language(self, value: str):
+        self.__language = value
     #endregion
