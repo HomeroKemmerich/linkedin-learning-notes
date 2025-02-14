@@ -3,7 +3,7 @@ class FileService:
     def __init__(self):
         pass
 
-    def read(path: str) -> str:
+    def read(self, path: str) -> str:
         with open(path, 'r', encoding='utf-8') as file:
             return file.read()
     

@@ -16,10 +16,10 @@ class AppController:
     course: Course
     settings: Settings
 
-    def __init__(self):
+    def __init__(self, file_service: FileService):
         self.view = MainView(self)
         self.settings = Settings()
-        self.__file_service = FileService()
+        self.__file_service = file_service
 
     def start(self):
         self.view.open()
@@ -33,12 +33,12 @@ class AppController:
         
         self.view.selected_file_label.config(text=file_name.split('/')[-1])
         
-        file = self.__file_service.read(file_name)
+        file_content = self.__file_service.read(file_name)  # Corrigir a chamada do método read
         
-        self.process_file(file)
+        self.process_file(file_content)
 
-    def process_file(self):
-        self.import_file()
+    def process_file(self, file_content):
+        self.file = file_content
 
         raw_chapters = self.file.split(SEPARATORS['CHAPTER'])
 
