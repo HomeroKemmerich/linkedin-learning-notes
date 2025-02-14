@@ -7,6 +7,8 @@ class MainView:
         self.controller = controller
 
         self.root = tk.Tk()
+        self.fd = fd
+
         self.root.title('LinkedIn Learning Notes')
 
         self.select_file_label = ttk.Label(self.root, text='Select a file:')
@@ -15,7 +17,7 @@ class MainView:
         self.selected_file_label = ttk.Label(self.root, text='')
         self.selected_file_label.grid(column=1, row=0)
 
-        self.select_file_button = ttk.Button(self.root, text='Attach...', command=self.import_file)
+        self.select_file_button = ttk.Button(self.root, text='Attach...', command=self.controller.import_file)
         self.select_file_button.grid(column=2, row=0)
 
         self.select_language_label = ttk.Label(self.root, text='Select a language:')
@@ -39,12 +41,6 @@ class MainView:
 
         self.export_button = ttk.Button(self.root, text='Export', command=self.export_file)
         self.export_button.grid(column=2, row=3)
-
-    def import_file(self):
-        input_file = fd.askopenfilename()
-        self.controller.set_input_file(input_file)
-        self.selected_file_label.config(text=input_file.split('/')[-1])
-        self.controller.process_file()
 
     def export_file(self):
         output_file = fd.asksaveasfilename(
