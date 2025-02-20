@@ -63,3 +63,6 @@ class MainView:
     
     def set_destination(self, destination):
         self.controller.set_destination(destination)
+
+    def get_file(self):
+        return self.fd.askopenfilename()

@@ -26,8 +26,7 @@ class AppController:
 
     #region File methods
     def import_file(self):
-        file_name = self.view.fd.askopenfilename()
-        print(file_name)
+        file_name = self.view.get_file()
 
         self.settings.input_file = file_name
         
